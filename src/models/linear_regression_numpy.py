@@ -80,3 +80,4 @@ if __name__ == "__main__":
     X_new = np.array([[100], [101]])
     predictions = model.predict(X_new)
     print("Predictions:", predictions)
+    print("MSE on training data:", model.mean_squared_error(y, model.predict(X)))

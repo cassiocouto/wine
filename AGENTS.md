@@ -24,6 +24,12 @@ This file helps onboard a new Claude agent to continue working on this project.
   - Implemented gradient descent (not Normal Equation)
   - User learned about convergence, learning rate, iterations
   - Achieved MSE ~0.386 (same as closed-form solution)
+- [x] Decision tree from scratch (`src/models/decision_tree_numpy.py`)
+  - Implemented Gini impurity for splitting criterion
+  - Recursive tree building with configurable max_depth and min_samples_split
+  - Tree stored as nested dictionaries with "node" and "leaf" types
+  - `print_tree()` method for visualization
+  - User learned about recursive splitting, stop conditions, tree traversal
 - [x] First PR created: `feature/eda-and-project-setup`
 
 ### In Progress / Next Steps
@@ -41,11 +47,13 @@ wine/
 ├── data/wine_quality.csv         # Dataset (semicolon delimiter!)
 ├── notebooks/
 │   ├── data_exploration.ipynb    # EDA notebook
-│   └── linear_regression_numpy.ipynb  # Custom LR experiments
+│   ├── linear_regression_numpy.ipynb  # Custom LR experiments
+│   └── decision_tree_numpy.ipynb # Custom Decision Tree experiments
 ├── src/
 │   ├── data/preparation.py       # Data loading, normalization, train/test split
 │   ├── models/
-│   │   └── linear_regression_numpy.py  # Custom LR implementation
+│   │   ├── linear_regression_numpy.py  # Custom LR with gradient descent
+│   │   └── decision_tree_numpy.py      # Custom Decision Tree with Gini
 │   └── utils/data_downloader.py  # Downloads dataset
 ├── plan.md                       # Learning guide (step-by-step instructions)
 └── pyproject.toml                # Dependencies and project config
@@ -96,3 +104,9 @@ black src/
 2. **Feature normalization**: Critical for gradient descent convergence
 3. **Outliers**: Right-skewed features (residual sugar, chlorides) - tree models handle well, linear models may need RobustScaler
 4. **pyproject.toml**: Modern Python packaging, replaces requirements.txt + setup.py
+5. **Decision Tree internals**:
+   - Gini impurity: `1 - Σ(pᵢ²)` measures class purity
+   - Recursive binary splitting: find best feature+threshold at each node
+   - Stop conditions: max_depth, min_samples_split, pure node (single class)
+   - Tree as nested dicts: `{"type": "node"/"leaf", "feature_index", "threshold", "left", "right", "class"}`
+6. **Matrix multiplication in Python**: `@` operator (equivalent to `np.dot()` or `np.matmul()`)
