@@ -25,7 +25,9 @@ def download_data(url: str, file_path: str='data/wine.csv') -> None:
     response = requests.get(url)
     response.raise_for_status()
 
-    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+    dir_name = os.path.dirname(file_path)
+    if dir_name:
+        os.makedirs(dir_name, exist_ok=True)
 
     with open(file_path, 'wb') as file:
         file.write(response.content)
