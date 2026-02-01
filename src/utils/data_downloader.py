@@ -13,16 +13,17 @@ def check_downloaded_data(file_path: str='data/wine.csv') -> bool:
     """
     return os.path.exists(file_path)
 
-def download_data(url: str, file_path: str='data/wine.csv') -> None:
+def download_data(url: str, file_path: str='data/wine.csv', timeout: int=30) -> None:
     """
     Download data from the specified URL and save it to the given file path.
 
     Args:
         url (str): The URL to download the data from.
         file_path (str): The path to save the downloaded data file.
+        timeout (int): Timeout for the request in seconds. Default is 30.
     """
 
-    response = requests.get(url)
+    response = requests.get(url, stream=True, timeout=timeout)
     response.raise_for_status()
 
     dir_name = os.path.dirname(file_path)
@@ -30,4 +31,6 @@ def download_data(url: str, file_path: str='data/wine.csv') -> None:
         os.makedirs(dir_name, exist_ok=True)
 
     with open(file_path, 'wb') as file:
-        file.write(response.content)
+        for chunk in response.iter_content(chunk_size=8192):
+            if chunk:
+                file.write(chunk)
